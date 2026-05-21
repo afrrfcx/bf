@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUE FAIRY | Official</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+    :root {
+      --blue: #2f8cff;
+      --blue2: #62c7ff;
+      --deep: #114f9d;
+      --sky: #eaf7ff;
+      --soft: #f7fcff;
+      --mint: #bff4ef;
+      --pink: #ff9ccc;
+      --yellow: #ffe58a;
+      --ink: #24344d;
+      --muted: #6d7d94;
+      --line: #c9e8ff;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 10%, rgba(98, 199, 255, .35), transparent 24%),
+        radial-gradient(circle at 88% 18%, rgba(191, 244, 239, .55), transparent 22%),
+        radial-gradient(circle at 60% 92%, rgba(255, 156, 204, .22), transparent 25%),
+        linear-gradient(180deg, #fafdff 0%, #eaf7ff 52%, #dff3ff 100%);
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body::-webkit-scrollbar,
+    .class-window::-webkit-scrollbar,
+    .receipt::-webkit-scrollbar,
+    .guild::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    body::-webkit-scrollbar-track,
+    .class-window::-webkit-scrollbar-track,
+    .receipt::-webkit-scrollbar-track,
+    .guild::-webkit-scrollbar-track {
+      background: rgba(201, 232, 255, .35);
+      border-radius: 999px;
+    }
+
+    body::-webkit-scrollbar-thumb,
+    .class-window::-webkit-scrollbar-thumb,
+    .receipt::-webkit-scrollbar-thumb,
+    .guild::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--blue), var(--blue2));
+      border-radius: 999px;
+    }
+
+    .page {
+      width: 1920px;
+      height: 1080px;
+      max-width: 100vw;
+      max-height: 100vh;
+      margin: 0 auto;
+      padding: 26px 34px 30px;
+      position: relative;
+      display: grid;
+      grid-template-rows: 76px 1fr;
+      gap: 16px;
+      overflow: hidden;
+    }
+
+    .sparkles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .75;
+      background-image:
+        radial-gradient(circle, rgba(47,140,255,.24) 0 2px, transparent 3px),
+        radial-gradient(circle, rgba(255,156,204,.28) 0 2px, transparent 3px),
+        radial-gradient(circle, rgba(255,229,138,.35) 0 2px, transparent 3px);
+      background-size: 180px 180px, 220px 220px, 260px 260px;
+      background-position: 20px 30px, 100px 120px, 170px 60px;
+      z-index: 0;
+    }
+
+    header, .layout { position: relative; z-index: 1; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border: 2px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 18px 45px rgba(37, 112, 184, .12);
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.5px;
+      color: var(--deep);
+      font-size: 26px;
+      white-space: nowrap;
+    }
+
+    .logo-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      box-shadow: 0 8px 20px rgba(47,140,255,.35);
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .nav-btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: white;
+      background: var(--blue);
+      box-shadow: 0 9px 20px rgba(47,140,255,.25);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 560px 1fr 500px;
+      grid-template-rows: 338px 1fr;
+      gap: 16px;
+      min-height: 0;
+    }
+
+    .card {
+      border-radius: 34px;
+      border: 2px solid var(--line);
+      background: rgba(255,255,255,.84);
+      box-shadow: 0 20px 50px rgba(37, 112, 184, .12);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      padding: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--deep);
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: -.4px;
+    }
+
+    .hero {
+      grid-column: 1;
+      grid-row: 1;
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      right: -95px;
+      top: 20px;
+      background: radial-gradient(circle at 40% 35%, rgba(191,244,239,.8), rgba(98,199,255,.18) 55%, transparent 70%);
+      z-index: 0;
+    }
+
+    .hero > * { position: relative; z-index: 1; }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 58px;
+      line-height: .98;
+      color: var(--deep);
+      letter-spacing: -2px;
+    }
+
+    .hero h1 span {
+      display: block;
+      color: var(--blue);
+    }
+
+    .hero p {
+      width: 84%;
+      margin: 18px 0 0;
+      padding: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.66;
+      word-break: keep-all;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      border: 0;
+      border-radius: 999px;
+      padding: 13px 20px;
+      font-weight: 900;
+      font-size: 14px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      box-shadow: 0 12px 26px rgba(47,140,255,.28);
+    }
+
+    .button.sub {
+      background: white;
+      color: var(--blue);
+      border: 2px solid var(--line);
+      box-shadow: none;
+    }
+
+    .class-window {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      padding: 22px 26px;
+      background: rgba(255,255,255,.78);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .msg-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #d8efff;
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+
+    .msg-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--deep);
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .msg-title::before {
+      content: '💬';
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #e7f6ff;
+      border: 2px solid #c9e8ff;
+      font-size: 19px;
+      flex: 0 0 auto;
+    }
+
+    .msg-chip {
+      color: var(--blue);
+      background: #edf9ff;
+      border: 2px solid #d2ecff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .class-chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .class-row {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 7px;
+      min-height: 0;
+      flex: 0 0 auto;
+    }
+
+    .bubble {
+      display: block;
+      width: fit-content;
+      max-width: 58%;
+      height: auto;
+      padding: 10px 15px 11px;
+      border-radius: 21px;
+      background: #e9e9ed;
+      border: 0;
+      color: #111;
+      font-size: 13px;
+      line-height: 1.45;
+      word-break: keep-all;
+      position: relative;
+      box-shadow: none;
+      align-self: flex-start;
+      flex: 0 0 auto;
+    }
+
+    .bubble b {
+      display: block;
+      color: inherit;
+      margin-bottom: 3px;
+      font-size: 14px;
+      font-weight: 900;
+    }
+
+    .bubble.right {
+      align-self: flex-end;
+      background: #2f8cff;
+      color: white;
+      border: 0;
+    }
+
+    .bubble.pink {
+      align-self: flex-start;
+      background: #e9e9ed;
+      color: #111;
+      border: 0;
+    }
+
+    .bubble::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      bottom: 0;
+      width: 15px;
+      height: 15px;
+      background: #e9e9ed;
+      border: 0;
+      border-bottom-right-radius: 12px;
+      transform: none;
+      z-index: -1;
+    }
+
+    .bubble.right::after {
+      left: auto;
+      right: -4px;
+      background: #2f8cff;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 12px;
+    }
+
+    .notice-stack {
+      grid-column: 3;
+      grid-row: 1;
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .notice {
+      padding: 22px;
+      border-radius: 28px;
+      background: white;
+      border: 2px solid var(--line);
+      box-shadow: 0 18px 40px rgba(37,112,184,.1);
+      overflow-y: auto;
+    }
+
+    .notice b {
+      display: block;
+      color: var(--blue);
+      margin-bottom: 8px;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .notice span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .receipt {
+      grid-column: 1;
+      grid-row: 2;
+      height: 100%;
+      padding: 24px 22px 30px;
+      border: 2px solid #8ddcff;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 20px 50px rgba(37,112,184,.12);
+      position: relative;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .receipt::before,
+    .receipt::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 18px;
+      background: radial-gradient(circle at 10px 9px, transparent 9px, rgba(255,255,255,.92) 10px) repeat-x;
+      background-size: 26px 18px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .receipt::before { top: -1px; transform: rotate(180deg); }
+    .receipt::after { bottom: -1px; position: sticky; }
+
+    .receipt h2 {
+      margin: 0 0 14px;
+      padding: 0;
+      color: var(--deep);
+      background: transparent;
+      font-size: 23px;
+      line-height: 1;
+      font-weight: 900;
+      box-shadow: none;
+    }
+
+    .receipt-intro {
+      min-height: 118px;
+      border: 0;
+      margin-bottom: 16px;
+      padding: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      word-break: keep-all;
+      background: transparent;
+    }
+
+    .receipt-line {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 12px;
+      padding: 8px 3px;
+      border-top: 2px solid #bfe7ff;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.38;
+    }
+
+    .receipt-line b {
+      color: var(--deep);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .barcode {
+      width: 210px;
+      height: 52px;
+      margin-top: 18px;
+      background: repeating-linear-gradient(90deg, #9be1ff 0 4px, transparent 4px 11px, #9be1ff 11px 14px, transparent 14px 24px);
+      opacity: .9;
+    }
+
+    .guild {
+      grid-column: 3;
+      grid-row: 2;
+      padding: 32px;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(255,156,204,.22), transparent 24%),
+        radial-gradient(circle at 92% 18%, rgba(98,199,255,.32), transparent 25%),
+        rgba(255,255,255,.9);
+      display: grid;
+      align-content: start;
+      gap: 13px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .guild h2 {
+      margin: 0;
+      color: var(--deep);
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .guild small {
+      display: block;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .guild h3 {
+      margin: 0;
+      padding: 0;
+      color: var(--blue);
+      background: transparent;
+      font-size: 23px;
+      font-weight: 900;
+      box-shadow: none;
+    }
+
+    .guild p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.78;
+      word-break: keep-all;
+      white-space: pre-line;
+    }
+
+    .guild-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .guild-tags span {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #f2fbff;
+      border: 2px solid #d2ecff;
+      color: var(--deep);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        min-height: 100dvh;
+        overflow-y: auto;
+      }
+
+      .page {
+        width: 100%;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        min-height: 100dvh;
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        overflow: visible;
+      }
+
+      header {
+        position: sticky;
+        top: 10px;
+        z-index: 10;
+        align-items: flex-start;
+        gap: 12px;
+        border-radius: 24px;
+        padding: 12px;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+
+      nav {
+        max-width: 55vw;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        font-size: 12px;
+        scrollbar-width: none;
+      }
+
+      nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      nav span:not(.nav-btn) {
+        padding: 8px 11px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.7);
+        border: 1px solid var(--line);
+      }
+
+      .nav-btn {
+        padding: 8px 12px;
+        flex: 0 0 auto;
+      }
+
+      .layout {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+      }
+
+      .card,
+      .receipt {
+        border-radius: 26px;
+      }
+
+      .hero {
+        padding: 26px 22px;
+        min-height: 320px;
+      }
+
+      .hero::before {
+        width: 280px;
+        height: 280px;
+        right: -125px;
+        top: 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(38px, 12vw, 58px);
+        letter-spacing: -1.5px;
+      }
+
+      .hero p {
+        width: 100%;
+        font-size: 14px;
+      }
+
+      .hero-actions {
+        margin-top: 20px;
+      }
+
+      .button {
+        flex: 1 1 130px;
+        padding: 12px 14px;
+      }
+
+      .class-window {
+        padding: 18px 14px;
+        max-height: 72vh;
+        overflow-y: auto;
+      }
+
+      .msg-top {
+        align-items: flex-start;
+        margin-bottom: 16px;
+      }
+
+      .msg-title {
+        font-size: 21px;
+      }
+
+      .msg-title::before {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+      }
+
+      .msg-chip {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+
+      .class-chat {
+        gap: 16px;
+        justify-content: flex-start;
+        align-items: stretch;
+      }
+
+      .class-row {
+        gap: 8px;
+        flex: 0 0 auto;
+      }
+
+      .bubble {
+        max-width: 82%;
+        font-size: 13px;
+        line-height: 1.48;
+      }
+
+      .bubble b {
+        font-size: 14px;
+      }
+
+      .notice-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .notice {
+        padding: 18px;
+        min-height: auto;
+      }
+
+      .receipt {
+        height: auto;
+        max-height: 70vh;
+        padding: 24px 18px 28px;
+      }
+
+      .receipt-intro {
+        min-height: 0;
+        font-size: 14px;
+      }
+
+      .receipt-line {
+        grid-template-columns: 1fr;
+        gap: 4px;
+        font-size: 13px;
+      }
+
+      .barcode {
+        width: 180px;
+        height: 44px;
+      }
+
+      .guild {
+        padding: 24px 20px;
+        max-height: 72vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .guild h2 {
+        font-size: 36px;
+      }
+
+      .guild h3 {
+        font-size: 21px;
+      }
+
+      .guild p {
+        font-size: 14px;
+        line-height: 1.72;
+      }
+
+      .guild-tags span {
+        font-size: 12px;
+        padding: 8px 11px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page {
+        padding: 10px;
+        gap: 12px;
+      }
+
+      header {
+        top: 8px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      nav {
+        max-width: 100%;
+      }
+
+      .hero,
+      .class-window,
+      .notice,
+      .receipt,
+      .guild {
+        border-radius: 22px;
+      }
+
+      .hero {
+        padding: 24px 18px;
+      }
+
+      .bubble {
+        max-width: 88%;
+      }
+
+      .class-window,
+      .guild {
+        max-height: 76vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sparkles"></div>
+  <main class="page">
+    <header>
+      <div class="logo"><div class="logo-mark">✦</div> BLUE FAIRY</div>
+      <nav>
+        <span>세계관</span><span>클래스</span><span>커뮤니티</span><span>길드</span><span class="nav-btn">게임 시작</span>
+      </nav>
+    </header>
+
+    <section class="layout">
+      <article class="card hero">
+        <h1>당신의 요정이<br><span>기다립니다</span></h1>
+        <p>2012년 출시 국산 MMORPG, 블루페어리. 라스페라 대륙에서 길드를 만들고, 장비를 거래하고, 코디를 완성하고, 오늘도 누군가와 인연을 이어가세요.</p>
+        <div class="hero-actions"><button class="button">다운로드</button><button class="button sub">업데이트 보기</button></div>
+      </article>
+
+      <article class="card class-window">
+        <div class="msg-top">
+          <div class="msg-title">클래스 소개</div>
+          <div class="msg-chip">CLASS TALK</div>
+        </div>
+        <div class="class-chat">
+          <div class="class-row">
+            <div class="bubble pink"><b>『전사 (Warrior)』</b>강인한 체력으로 전장의 선봉에 섭니다.</div>
+            <div class="bubble right">발키리: 빛 속성 유틸탱 / 아군 보호 및 버프<br>성기사: 검과 방패의 딜탱 / 빠른 연격과 방어<br>어비스나이트: 어둠의 대검사 / 묵직한 마법형 광역 공격</div>
+          </div>
+          <div class="class-row">
+            <div class="bubble"><b>『무도가 (Martial Artist)』</b>폭발적인 타격감으로 적을 분쇄합니다.</div>
+            <div class="bubble right">인파이터: 초근접 연타 / 묵직한 한 방의 타격감<br>기공사: 권법과 기공의 조화 / 중거리 원소 폭발<br>창술사: 광범위 난무 / 적의 공격을 흘리는 반격기</div>
+          </div>
+          <div class="class-row">
+            <div class="bubble pink"><b>『암살자 (Assassin)』</b>그림자 속에서 적의 심장을 꿰뚫습니다.</div>
+            <div class="bubble right">닌자: 인술과 표창 / 전장을 종횡무진하는 기동성<br>사무라이: 화려한 검기 / 일격필살의 퓨어 딜러<br>리퍼: 단검과 독 / 은신 후 치명적인 기습</div>
+          </div>
+          <div class="class-row">
+            <div class="bubble"><b>『마법사 (Mage)』</b>신비로운 마법으로 전장을 지배합니다.</div>
+            <div class="bubble right">흑마도사: 저주와 고화력 / 파괴적인 어둠의 마법<br>배틀메이지: 원소 캐스터 / 전통적인 마법 공격<br>아르카나: 유틸 서포터 / 타로카드를 통한 스택형 디버퍼<br>소환술사: 두루마리로 환수를 봉인하고 소환하는 중거리 딜러<br>바드: 퓨어 힐러 / 기타 연주를 통한 생존 지원</div>
+          </div>
+          <div class="class-row">
+            <div class="bubble pink"><b>『헌터 (Hunter)』</b>악마의 기술로 적을 유린합니다.</div>
+            <div class="bubble right">건슬링어: 스타일리쉬 사격 / 샷건과 라이플의 조화<br>건브레이커: 마탄과 소드 / 근거리와 원거리의 경계<br>호크아이: 기계활과 특수화살 / 전류를 터뜨리는 원거리 딜러<br>소울이터: 사신의 낫 / 망자 소환 및 강력한 피흡</div>
+          </div>
+        </div>
+      </article>
+
+      <aside class="notice-stack">
+        <div class="notice"><b>오늘의 이벤트</b><span>접속 보상으로 파란 요정의 날개 염색권 지급 중.</span></div>
+        <div class="notice"><b>신규/복귀 지원</b><span>장비 성장 재료와 기본 코디 세트를 한 번에 받아가세요.</span></div>
+        <div class="notice"><b>커뮤니티 핫토픽</b><span>이번 주 유저 게시판과 스샷 게시판을 동시에 달군 코디 논쟁.</span></div>
+      </aside>
+
+      <article class="receipt">
+        <h2>라스페라 대륙 소개</h2>
+        <div class="receipt-intro">태초의 파란 요정이 자신의 심장 조각으로 빚어냈다는 전설의 대륙. 인간, 엘프, 도깨비, 악마 네 종족의 서사가 얽힌 이 거대한 무대에서 플레이어는 던전, 레이드, 필드 분쟁, 길드 영지, 코디 시스템을 오가며 자신만의 전설을 만든다.</div>
+        <div class="receipt-line"><b>루미나스 왕국</b><span>빛의 수도 솔라리온이 있는 인간의 영토. 룩덕과 랭커가 동시에 잠수 타는 대표 광장입니다.</span></div>
+        <div class="receipt-line"><b>에렌디아 숲</b><span>세계수와 오로라가 펼쳐진 엘프의 숲. 스크린샷 명소로 유명합니다.</span></div>
+        <div class="receipt-line"><b>가람별</b><span>도깨비와 무도가의 고향. 동양풍 무협, 요괴, 그리고 끝없는 메인퀘스트가 특징입니다.</span></div>
+        <div class="receipt-line"><b>게헤나 자치구</b><span>스팀펑크와 고딕이 만나는 악마의 도시. 고레벨 유저들의 주차장이기도 합니다.</span></div>
+        <div class="receipt-line"><b>칼리고</b><span>최상위 사냥터와 길드 분쟁이 끊이지 않는 적색 지대입니다.</span></div>
+        <div class="barcode"></div>
+      </article>
+
+      <article class="card guild">
+        <h2>휴지심</h2>
+        <small>GUILD / 46 MEMBERS</small>
+        <h3>[GM 인터뷰]친숙한 1위 길드</h3>
+        <p>휴지심은 블루페어리에서 가장 자주 이름이 오르내리는 길드 중 하나입니다. 랭킹과 실력만으로 설명하기에는 조금 부족합니다. 이 길드는 공략을 빠르게 분석하고, 주간 콘텐츠를 안정적으로 소화하며, 각종 필드 이슈와 커뮤니티 화제의 중심에 서는 상위 길드이기도 하지만, 동시에 길드 채팅이 멈추지 않는 유쾌한 생활형 커뮤니티이기도 합니다.
+
+흥미로운 점은 이 길드가 단순히 ‘강한 길드’로만 소비되지 않는다는 것입니다. 휴지심은 블루페어리 안에서 하나의 밈처럼, 하나의 풍경처럼 자리 잡았습니다. 랭킹을 확인하는 유저도, 방송 클립을 보는 유저도, 커뮤니티 게시판을 훑는 유저도 한 번쯤은 이 이름을 마주치게 됩니다. 어떤 날은 공략으로, 어떤 날은 유저 게시판의 말머리로, 또 어떤 날은 말도 안 되는 코디 평가 채팅으로요.</p>
+        <div class="guild-tags"><span>#길드원 46명</span><span>#숙제팟 상시모집</span><span>#디스코드 활발</span></div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
